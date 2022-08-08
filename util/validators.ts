@@ -1,17 +1,22 @@
-interface IError {
+interface IRegisterError {
   username?: string;
   email?: string;
   password?: string;
   confirmPassword?: string;
 }
 
-const validateRegisterInput = (
+interface ILogInError {
+  username?: string;
+  password?: string;
+}
+
+export const validateRegisterInput = (
   username: string,
   email: string,
   password: string,
   confirmPassword: string
 ) => {
-  const errors = {} as IError;
+  const errors = {} as IRegisterError;
 
   if (username.trim() === '') {
     errors.username = 'Username must not be empty';
@@ -38,4 +43,16 @@ const validateRegisterInput = (
   };
 };
 
-export default validateRegisterInput;
+export const validateLoginInput = (username: string, password: string) => {
+  const errors = {} as ILogInError;
+  if (username.trim() === '') {
+    errors.username = 'Username must not be empty';
+  }
+  if (password === '') {
+    errors.password = 'Password must not be empty';
+  }
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
