@@ -1,8 +1,11 @@
-import postsResolver from "./posts";
-// import usersResolver from "./users";
+import postsResolver from './posts';
+import usersResolver from './users';
 
 export default {
-    Query: {
-        ...postsResolver.Query,
-    },
-}
+  Query: {
+    ...postsResolver.Query,
+  },
+  Mutation: {
+    ...usersResolver.Mutation,
+  },
+};
