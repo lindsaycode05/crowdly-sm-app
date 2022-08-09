@@ -1,6 +1,15 @@
 import { model, Schema } from 'mongoose';
 
-const postSchema = new Schema({
+interface IPost {
+  body: string;
+  username: string;
+  createdAt: string;
+  comments: { body: string; username: string; createdAt: string }[];
+  likes: { username: string; createdAt: string }[];
+  user: Schema.Types.ObjectId;
+}
+
+const postSchema = new Schema<IPost>({
   body: String,
   username: String,
   createdAt: String,
@@ -23,4 +32,4 @@ const postSchema = new Schema({
   },
 });
 
-export default model('Post', postSchema);
+export default model<IPost>('Post', postSchema);

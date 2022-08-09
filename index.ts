@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, ServerInfo } from 'apollo-server';
 import mongoose from 'mongoose';
 
 import { typeDefs } from './graphql/typeDefinitions';
@@ -7,7 +7,7 @@ import {MONGODB} from './config';
 
 const PORT = process.env.PORT || 3000;
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs, resolvers,context:({req}) => ({req}) });
 
 mongoose
   .connect(MONGODB)
@@ -15,7 +15,7 @@ mongoose
     console.log('MongoDB Connected');
     return server.listen({ port: PORT });
   })
-  .then((res: any) => {
+  .then((res: ServerInfo) => {
     console.log(`Server running at ${res.url}`);
   })
   .catch((err: Error) => {
