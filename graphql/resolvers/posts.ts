@@ -1,6 +1,6 @@
 import Post from '../../models/Post';
 import { checkAuth } from '../../util/check-auth';
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError, UserInputError } from 'apollo-server';
 
 const postsResolver = {
   Query: {
@@ -36,16 +36,19 @@ const postsResolver = {
     async createPost(_: any, { body }: { body: string }, context: any) {
       const user = checkAuth(context);
 
+      if (body.trim() === '') {
+        throw new UserInputError('Body must not be empty');
+      }
+
       const newPost = new Post({
         body,
-        // @ts-ignore
         user: user.id,
-        // @ts-ignore
         username: user.username,
         createdAt: new Date().toISOString(),
       });
 
       const post = await newPost.save();
+
       return post;
     },
 
@@ -66,6 +69,27 @@ const postsResolver = {
         else message = String(error);
         throw new Error(message);
       }
+    },
+
+    async likePost(_: any, { postId }: { postId: string }, context: any) {
+      const { username } = checkAuth(context);
+
+      const post = await Post.findById(postId);
+      if (post) {
+        if (post.likes.find((like) => like.username === username)) {
+          // Post already liked, unlike it
+          post.likes = post.likes.filter((like) => like.username !== username);
+        } else {
+          // Not liked, like post
+          post.likes.push({
+            username,
+            createdAt: new Date().toISOString(),
+          });
+        }
+
+        await post.save();
+        return post;
+      } else throw new UserInputError('Post not found');
     },
   },
 };
