@@ -8,11 +8,11 @@ const Navbar = () => {
   let activeClassName = 'active';
 
   return (
-    <AppBar position='static' sx={{paddingX:4,paddingY:1.4}}>
+    <AppBar position='static' sx={{ paddingX: 4, paddingY: 1.4 }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box>
           <NavLink
-            style={{ textDecoration: 'none', color: 'white' }}
+            style={{ textDecoration: 'none', color: 'white', fontSize: 17 }}
             to='/'
             className={({ isActive }) =>
               isActive ? activeClassName : undefined
@@ -22,11 +22,13 @@ const Navbar = () => {
           </NavLink>
         </Box>
         <Box>
-          <Typography variant='h6' fontWeight='600'>Crowdly</Typography>
+          <Typography variant='h4' fontWeight='600'>
+            Crowdly
+          </Typography>
         </Box>
         <Box display='flex' gap={5}>
           <NavLink
-            style={{ textDecoration: 'none', color: 'white' }}
+            style={{ textDecoration: 'none', color: 'white', fontSize: 17 }}
             to='login'
             className={({ isActive }) =>
               isActive ? activeClassName : undefined
@@ -35,7 +37,7 @@ const Navbar = () => {
             Login
           </NavLink>
           <NavLink
-            style={{ textDecoration: 'none', color: 'white' }}
+            style={{ textDecoration: 'none', color: 'white', fontSize: 17 }}
             to='register'
             className={({ isActive }) =>
               isActive ? activeClassName : undefined

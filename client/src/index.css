@@ -8,7 +8,8 @@ body {
 }
 
 .active{
-  color:yellowgreen !important;
+  color:rgb(181, 239, 66) !important;
   text-decoration: underline !important;
-  text-decoration-color: yellowgreen;
+  text-decoration-color: rgb(181, 239, 66);
+  font-weight: 500;
 }
