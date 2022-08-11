@@ -1,9 +1,5 @@
 <h1 id="top" align="center">Crowdly Social Media App</h1>
 
-## 🎯 Links
-
-Watch it in action [here](https://imaginative-piroshki-0f6c5a.netlify.app)
-
 ## 📌 Details
 
 - Full stack application where the user can view the posts of other members and interact with them
