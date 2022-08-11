@@ -21,7 +21,7 @@ const AuthContext = createContext({
   logout: () => {},
 });
 
-function authReducer(state: any, action: any) {
+const authReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'LOGIN':
       return {
@@ -36,23 +36,23 @@ function authReducer(state: any, action: any) {
     default:
       return state;
   }
-}
+};
 
-function AuthProvider(props: any) {
+const AuthProvider = (props: any) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  function login(userData: any) {
+  const login = (userData: any) => {
     localStorage.setItem('jwtToken', userData.token);
     dispatch({
       type: 'LOGIN',
       payload: userData,
     });
-  }
+  };
 
-  function logout() {
+  const logout = () => {
     localStorage.removeItem('jwtToken');
     dispatch({ type: 'LOGOUT' });
-  }
+  };
 
   return (
     <AuthContext.Provider
@@ -60,6 +60,6 @@ function AuthProvider(props: any) {
       {...props}
     />
   );
-}
+};
 
 export { AuthContext, AuthProvider };
