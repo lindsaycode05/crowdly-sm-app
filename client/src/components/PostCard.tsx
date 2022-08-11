@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IPost } from '../pages/Home';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -6,13 +6,17 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
-import { Avatar, Divider } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Avatar, Divider, IconButton } from '@mui/material';
 import images from '../images';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/auth';
+import DeleteIcon from '@mui/icons-material/Delete';
+import LikeButton from './LikeButton'
 
 const PostCard = ({ post, idx }: { post: IPost; idx: number }) => {
+  const { user } = useContext(AuthContext);
+
   return (
     <Card sx={{ marginBottom: 9 }}>
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -38,26 +42,11 @@ const PostCard = ({ post, idx }: { post: IPost; idx: number }) => {
           </Box>
         </Box>
         <Divider />
-        <Box display='flex' alignItems='center' marginTop={1.5} gap={2}>
+        <Box display='flex' marginTop={1.5} gap={2}>
+          <LikeButton post={post} user={user} />
           <Button
-            variant='contained'
-            endIcon={
-              <Box display='flex' marginLeft={0.4}>
-                <Typography>{post.likeCount}</Typography>
-                <FavoriteBorderIcon />
-              </Box>
-            }
-            sx={{
-              backgroundColor: '#a944b98b',
-              transition: '.2s',
-              '&:hover': {
-                backgroundColor: '#a944b97a',
-              },
-            }}
-          >
-            Love this
-          </Button>
-          <Button
+            component={Link}
+            to={`/posts/${post.id}`}
             variant='contained'
             endIcon={
               <Box display='flex' marginLeft={0.4}>
@@ -75,6 +64,12 @@ const PostCard = ({ post, idx }: { post: IPost; idx: number }) => {
           >
             Comment it
           </Button>
+          {/* @ts-ignore */}
+          {user && user.username === post.username && (
+            <IconButton>
+              <DeleteIcon sx={{ color: '#d14040' }} />
+            </IconButton>
+          )}
         </Box>
       </CardContent>
     </Card>

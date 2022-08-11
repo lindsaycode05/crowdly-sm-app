@@ -19,6 +19,9 @@ const PostForm = () => {
       proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
       values.body = '';
     },
+    onError(error) {
+      console.log(error);
+    },
   });
 
   function createPostCallback() {
@@ -27,7 +30,14 @@ const PostForm = () => {
 
   return (
     <Box component='form' onSubmit={onSubmit} marginRight={13} marginBottom={5}>
-      <Typography textAlign='center' variant='h6' marginBottom={1} marginRight={.5}>Create a post:</Typography>
+      <Typography
+        textAlign='center'
+        variant='h6'
+        marginBottom={1}
+        marginRight={0.5}
+      >
+        Create a post:
+      </Typography>
       <Box
         display='flex'
         flexDirection='column'
@@ -40,8 +50,12 @@ const PostForm = () => {
           name='body'
           onChange={onChange}
           value={values.body}
-          error={error ? true : false}
         />
+        {error && (
+          <Typography textAlign='center' sx={{ color: '#954545' }}>
+            {error?.graphQLErrors[0]?.message}
+          </Typography>
+        )}
         <Button type='submit' variant='contained'>
           Submit
         </Button>
