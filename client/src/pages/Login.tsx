@@ -108,7 +108,12 @@ const Login = () => {
           <>
             {Object.keys(errors).length > 0 && (
               <Card
-                sx={{ width: '40%', marginInline: 'auto', marginTop: 5 }}
+                sx={{
+                  width: '40%',
+                  marginInline: 'auto',
+                  marginRight: '32%',
+                  marginTop: 5,
+                }}
                 elevation={3}
               >
                 <List>

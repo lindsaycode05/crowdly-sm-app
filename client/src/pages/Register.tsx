@@ -128,7 +128,7 @@ const Register = () => {
       <>
         {Object.keys(errors).length > 0 && (
           <Card
-            sx={{ width: '40%', marginInline: 'auto', marginTop: 5 }}
+            sx={{ width: '40%', marginInline: 'auto', marginTop: 5,marginRight:'32%' }}
             elevation={3}
           >
             <List>

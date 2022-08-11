@@ -21,7 +21,7 @@ const Navbar = () => {
           </Typography>
         </Box>
         <Box>
-          <Typography variant='h4' fontWeight='600'>
+          <Typography variant='h4' fontWeight='600' marginRight={22.5}>
             Crowdly
           </Typography>
         </Box>

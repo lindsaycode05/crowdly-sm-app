@@ -14,15 +14,24 @@ import { Link } from 'react-router-dom';
 
 const PostCard = ({ post, idx }: { post: IPost; idx: number }) => {
   return (
-    <Card>
+    <Card sx={{ marginBottom: 9 }}>
       <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box display='flex' alignItems='center' justifyContent='space-between'>
-          <Box display='flex' flexDirection='column'> 
+          <Box display='flex' flexDirection='column'>
             <Typography textTransform='capitalize'>{post.username}</Typography>
-            <Link to={`/posts/${post.id}`} style={{color:'#3333339f',textDecoration:'none',marginTop:-3}}>
+            <Link
+              to={`/posts/${post.id}`}
+              style={{
+                color: '#3333339f',
+                textDecoration: 'none',
+                marginTop: -3,
+              }}
+            >
               {moment(post.createdAt).fromNow(true)}
             </Link>
-            <Typography marginTop={2} marginBottom={1.4}>{post.body}</Typography>
+            <Typography marginTop={2} marginBottom={1.4}>
+              {post.body}
+            </Typography>
           </Box>
           <Box>
             <Avatar src={images[idx]} />

@@ -5,6 +5,7 @@ interface IRegisterValues {
   email?: string;
   password?: string;
   confirmPassword?: string;
+  body?:string;
 }
 
 export const useForm = (callback: () => void, initialState = {}) => {
