@@ -4,7 +4,7 @@
 
 - Full stack application where the user can view the posts of other members and interact with them
 - The user can create posts
-- The user can register and log in
+- The user can register or log in
 - The user can like comments
 
 ## ✨ Built With
