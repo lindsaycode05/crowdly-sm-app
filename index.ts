@@ -3,12 +3,15 @@ import mongoose from 'mongoose';
 
 import { typeDefs } from './graphql/typeDefinitions';
 import resolvers from './graphql/resolvers';
-import {MONGODB} from './config';
+import { MONGODB } from './config';
 
 const PORT = process.env.PORT || 3001;
 
-
-const server = new ApolloServer({ typeDefs, resolvers,context:({req}) => ({req}) });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => ({ req }),
+});
 
 mongoose
   .connect(MONGODB)

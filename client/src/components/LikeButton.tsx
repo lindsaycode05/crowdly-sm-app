@@ -5,7 +5,7 @@ import { useMutation, gql } from '@apollo/client';
 import { Box, Button, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const LikeButton = ({ post, user }: { post: IPost; user: any }) => {
+const LikeButton = ({ post, user }: { post: Partial<IPost>; user: any }) => {
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {

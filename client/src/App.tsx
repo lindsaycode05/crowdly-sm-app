@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import SinglePost from './pages/SinglePost';
 import Register from './pages/Register';
 import { AuthProvider } from './context/auth';
 import AuthRoute from './util/auth-route';
@@ -30,6 +31,7 @@ const App = () => {
               </AuthRoute>
             }
           />
+          <Route path='/posts/:postId' element={<SinglePost />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

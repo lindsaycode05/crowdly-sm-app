@@ -11,8 +11,8 @@ import images from '../images';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/auth';
-import DeleteIcon from '@mui/icons-material/Delete';
-import LikeButton from './LikeButton'
+import DeleteButton from './DeleteButton';
+import LikeButton from './LikeButton';
 
 const PostCard = ({ post, idx }: { post: IPost; idx: number }) => {
   const { user } = useContext(AuthContext);
@@ -66,9 +66,10 @@ const PostCard = ({ post, idx }: { post: IPost; idx: number }) => {
           </Button>
           {/* @ts-ignore */}
           {user && user.username === post.username && (
-            <IconButton>
-              <DeleteIcon sx={{ color: '#d14040' }} />
-            </IconButton>
+            <DeleteButton
+              postId={post.id}
+              commentId=''
+            />
           )}
         </Box>
       </CardContent>
