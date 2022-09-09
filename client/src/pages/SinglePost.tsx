@@ -58,33 +58,37 @@ const SinglePost = () => {
           width: '40%',
           marginInline: 'auto',
           marginTop: '45px',
+          gap: '40px',
         }}
       >
         <Box>
           <Avatar src={images[Math.floor(Math.random() * 8)]} />
         </Box>
         <Box
-          gap='40px'
+          gap='15px'
           display='flex'
           flexDirection='column'
           justifyContent='space-between'
           alignItems='center'
+          paddingY='8px'
         >
           <Box
             display='flex'
             flexDirection='column'
             justifyContent='start'
             alignItems='start'
+            width='100%'
           >
             <Typography>{username}</Typography>
             <Typography>{moment(createdAt).fromNow()}</Typography>
             <Typography marginTop='10px'>{body}</Typography>
           </Box>
-          <Divider />
+          <Divider sx={{ width: '100%', borderColor: 'grey' }} />
           <Box
             display='flex'
             justifyContent='space-between'
             alignItems='center'
+            gap='10px'
           >
             <Box display='flex' alignItems='center'>
               <LikeButton user={user} post={{ id, likes, likeCount }} />
@@ -99,6 +103,7 @@ const SinglePost = () => {
                 sx={{
                   backgroundColor: '#447eb98a',
                   transition: '.2s',
+                  marginLeft:'5px',
                   '&:hover': {
                     backgroundColor: '#447eb969',
                   },

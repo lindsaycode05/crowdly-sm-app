@@ -7,10 +7,18 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const LikeButton = ({ post, user }: { post: Partial<IPost>; user: any }) => {
   const [liked, setLiked] = useState(false);
-
   useEffect(() => {
-    // @ts-ignore
-    if (user && post.likes.find((like) => like.username === user.username)) {
+    if (
+      user &&
+      post?.likes?.find((like) =>
+        // @ts-ignore
+        like?.username === user?.username
+          ? // @ts-ignore
+            like.username === user.username
+          : // @ts-ignore
+            like.username === user?.user?.username
+      )
+    ) {
       setLiked(true);
     } else {
       setLiked(false);
