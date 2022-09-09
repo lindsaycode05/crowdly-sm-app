@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
-import { Avatar, Divider, IconButton } from '@mui/material';
+import { Avatar, Divider } from '@mui/material';
 import images from '../images';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Link } from 'react-router-dom';
@@ -66,10 +66,7 @@ const PostCard = ({ post, idx }: { post: IPost; idx: number }) => {
           </Button>
           {/* @ts-ignore */}
           {user && user.username === post.username && (
-            <DeleteButton
-              postId={post.id}
-              commentId=''
-            />
+            <DeleteButton postId={post.id} commentId={null} />
           )}
         </Box>
       </CardContent>

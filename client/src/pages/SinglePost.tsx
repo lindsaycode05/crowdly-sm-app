@@ -1,19 +1,19 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import {
   Avatar,
   Box,
   Button,
   Card,
-  CardContent,
   CircularProgress,
   Divider,
+  TextField,
   Typography,
 } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import images from '../images';
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import LikeButton from '../components/LikeButton';
 import { AuthContext } from '../context/auth';
 import DeleteButton from '../components/DeleteButton';
@@ -22,11 +22,26 @@ const SinglePost = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
 
+  const commentInputRef = useRef<any>(null);
+
+  const [comment, setComment] = useState('');
+
   const user = useContext(AuthContext);
 
   const { data } = useQuery(FETCH_POST_QUERY, {
     variables: {
       postId,
+    },
+  });
+
+  const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
+    update() {
+      setComment('');
+      commentInputRef?.current.blur();
+    },
+    variables: {
+      postId,
+      body: comment,
     },
   });
 
@@ -55,14 +70,21 @@ const SinglePost = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          width: '40%',
+          width: '60%',
           marginInline: 'auto',
           marginTop: '45px',
-          gap: '40px',
+          gap: '60px',
+          paddingInline: '18px',
         }}
       >
-        <Box>
-          <Avatar src={images[Math.floor(Math.random() * 8)]} />
+        <Box width='85px' height='85px'>
+          <Avatar
+            sx={{
+              width: '85px',
+              height: '85px',
+            }}
+            src={images[0]}
+          />
         </Box>
         <Box
           gap='15px'
@@ -103,7 +125,7 @@ const SinglePost = () => {
                 sx={{
                   backgroundColor: '#447eb98a',
                   transition: '.2s',
-                  marginLeft:'5px',
+                  marginLeft: '5px',
                   '&:hover': {
                     backgroundColor: '#447eb969',
                   },
@@ -118,11 +140,56 @@ const SinglePost = () => {
               {user && user.user.username === username && (
                 <DeleteButton
                   postId={id}
-                  commentId=''
-                  callback={() => deletePostCallback()}
+                  callback={deletePostCallback}
+                  commentId={null}
                 />
               )}
             </Box>
+          </Box>
+          <Box display='flex' flexDirection='column' width='100%'>
+            {user && (
+              <Box display='flex' flexDirection='column'>
+                <Typography>Post a comment</Typography>
+                <Box display='flex' flexDirection='column'>
+                  <TextField
+                    type='text'
+                    placeholder='Comment..'
+                    name='comment'
+                    value={comment}
+                    onChange={(event) => setComment(event.target.value)}
+                    ref={commentInputRef}
+                  />
+                  <Button
+                    type='submit'
+                    disabled={comment.trim() === ''}
+                    onClick={() => submitComment()}
+                    sx={{ marginTop: '6px' }}
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              </Box>
+            )}
+            {comments.length !== 0 && (
+              <Typography variant='h6'>Comments:</Typography>
+            )}
+            {comments.map((comment: any) => (
+              <Box marginTop='14px'>
+                <Typography>{comment.username}</Typography>
+                <Typography color='#888' marginTop='-4px'>
+                  {moment(comment.createdAt).fromNow()}
+                </Typography>
+                <Box display='flex' alignItems='center' gap='50%'>
+                  <Typography width='100%'>{comment.body}</Typography>
+                  {/* // 
+                @ts-ignore */}
+                  {user && user.user.username === comment.username && (
+                    <DeleteButton postId={id} commentId={comment.id} />
+                  )}
+                </Box>
+                <Divider sx={{ width: '100%', borderColor: 'grey' }} />
+              </Box>
+            ))}
           </Box>
         </Box>
       </Card>
@@ -131,6 +198,21 @@ const SinglePost = () => {
 
   return postJSX;
 };
+
+const SUBMIT_COMMENT_MUTATION = gql`
+  mutation ($postId: ID!, $body: String!) {
+    createComment(postId: $postId, body: $body) {
+      id
+      comments {
+        id
+        body
+        createdAt
+        username
+      }
+      commentCount
+    }
+  }
+`;
 
 const FETCH_POST_QUERY = gql`
   query ($postId: ID!) {

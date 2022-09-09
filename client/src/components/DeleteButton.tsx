@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,14 +11,14 @@ const DeleteButton = ({
   callback,
 }: {
   postId: string;
-  commentId: string;
+  commentId: string | null;
   callback?: () => void;
 }) => {
   const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
 
   const [deletePostOrMutation] = useMutation(mutation, {
     update(proxy) {
-      if (!commentId) {
+      if (commentId !== null) {
         const data: any = proxy.readQuery({
           query: FETCH_POSTS_QUERY,
         });
