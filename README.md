@@ -27,5 +27,5 @@
 
 ## 🚀 Improvements
 
-- Use GraphQL's "subscriptions" and implement a websocket server to render the new posts in "live-mode"
+- Use GraphQL's "subscriptions" and implement a websocket API to render the new posts in "live-mode"
 - Write E2E tests for conducting a TDD workflow regarding the UI interactions in the app
